@@ -3,6 +3,7 @@ train atlas-based alignment with MICCAI2018 version of VoxelMorph,
 specifically adding uncertainty estimation and diffeomorphic transforms.
 """
 
+
 # python imports
 import os
 import glob
@@ -22,6 +23,9 @@ import datagenerators
 import networks
 import losses
 
+"""
+the model uses the volume data and atlas data for the training process
+"""
 
 ## some data prep
 # Volume size used in our experiments. Please change to suit your data.
@@ -31,6 +35,7 @@ vol_size = (160, 192, 224)
 # for the CVPR paper, we have data arranged in train/validate/test folders
 # inside each folder is a /vols/ and a /asegs/ folder with the volumes
 # and segmentations
+# read the volume data from the directory
 base_data_dir = '/home/ys895/resize256/resize256-crop_x32/'
 train_vol_names = glob.glob(base_data_dir + 'train/vols/*.npz')
 random.shuffle(train_vol_names)  # shuffle volume list
@@ -52,7 +57,11 @@ def train(model_dir, gpu_id, lr, n_iterations, alpha, image_sigma, model_save_it
     :param model_save_iter: frequency with which to save models
     :param batch_size: Optional, default of 1. can be larger, depends on GPU memory and volume size
     """
-    
+
+    """
+    preparing the model
+    """
+
     # prepare model folder
     if not os.path.isdir(model_dir):
         os.mkdir(model_dir)
@@ -87,7 +96,11 @@ def train(model_dir, gpu_id, lr, n_iterations, alpha, image_sigma, model_save_it
     train_example_gen = datagenerators.example_gen(train_vol_names)
     zeros = np.zeros((1, *vol_size, 3))
 
-    # train. Note: we use train_on_batch and design out own print function as this has enabled 
+    """
+    training process
+    """
+
+    # train. Note: we use train_on_batch and design out own print function as this has enabled
     # faster development and debugging, but one could also use fit_generator and Keras callbacks.
     for step in range(1, n_iterations):
         
@@ -95,6 +108,7 @@ def train(model_dir, gpu_id, lr, n_iterations, alpha, image_sigma, model_save_it
         X = next(train_example_gen)[0]        
 
         # train
+        # train with the raw images and the warped image by the deformation field
         with tf.device(gpu):
             train_loss = model.train_on_batch([X,atlas_vol], [atlas_vol, zeros])
 

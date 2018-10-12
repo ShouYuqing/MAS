@@ -79,6 +79,11 @@ def unet_core(vol_size, enc_nf, dec_nf, full_size=True):
     return Model(inputs=[src, tgt], outputs=[x])
 
 
+"""
+the unet has two input: src and tgt, they are volume and atlas 
+it returns the warped image and the flow used to warp it
+"""
+
 def unet(vol_size, enc_nf, dec_nf, full_size=True):
     """
     unet architecture for voxelmorph models presented in the CVPR 2018 paper. 
@@ -110,7 +115,9 @@ def unet(vol_size, enc_nf, dec_nf, full_size=True):
     model = Model(inputs=[src, tgt], outputs=[y, flow])
     return model
 
-
+"""
+return warped image and flow param
+"""
 def miccai2018_net(vol_size, enc_nf, dec_nf, use_miccai_int=True, int_steps=7, indexing='xy'):
     """
     architecture for probabilistic diffeomoprhic VoxelMorph presented in the MICCAI 2018 paper. 
@@ -130,7 +137,7 @@ def miccai2018_net(vol_size, enc_nf, dec_nf, use_miccai_int=True, int_steps=7, i
             miccai 2018 runs were done with xy indexing.
     :return: the keras model
     """    
-    
+
     # get unet
     unet_model = unet_core(vol_size, enc_nf, dec_nf, full_size=False)
     [src,tgt] = unet_model.inputs
@@ -174,12 +181,13 @@ def miccai2018_net(vol_size, enc_nf, dec_nf, use_miccai_int=True, int_steps=7, i
     y = nrn_layers.SpatialTransformer(interp_method='linear', indexing=indexing)([src, flow])
 
     # prepare outputs and losses
+    # return y, which is the warped image of src with flow
     outputs = [y, flow_params]
 
     # build the model
     return Model(inputs=[src, tgt], outputs=outputs)
 
-
+# return a model used to compute spatial tramsform
 def nn_trf(vol_size):
     """
     Simple transform model for nearest-neighbor based transformation
