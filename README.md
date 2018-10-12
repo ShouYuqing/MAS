@@ -1,2 +1,2 @@
 # MAS
-For Meng project
+Multi Atlas Segmentation for Biomedical data (in progress)
