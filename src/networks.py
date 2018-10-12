@@ -195,6 +195,7 @@ def nn_trf(vol_size):
     # note xy indexing because Guha's original code switched x and y dimensions
     nn_output = nrn_layers.SpatialTransformer(interp_method='nearest', indexing='xy')
     nn_spatial_output = nn_output([subj_input, trf_input])
+    # return a model used to compute spatial tramsform
     return keras.models.Model([subj_input, trf_input], nn_spatial_output)
 
 
