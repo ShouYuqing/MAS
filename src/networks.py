@@ -102,7 +102,7 @@ def unet(vol_size, enc_nf, dec_nf, full_size=True):
     x = unet_model.output
 
     # transform the results into a flow field.
-    # make waped src into the flow
+    # make warped src into the flow
     flow = Conv3D(3, kernel_size=3, padding='same',
                   kernel_initializer=RandomNormal(mean=0.0, stddev=1e-5), name='flow')(x)
 
