@@ -102,7 +102,7 @@ def unet(vol_size, enc_nf, dec_nf, full_size=True):
     x = unet_model.output
 
     # transform the results into a flow field.
-    # unet_core.output-->>flow
+    # make waped src into the flow
     flow = Conv3D(3, kernel_size=3, padding='same',
                   kernel_initializer=RandomNormal(mean=0.0, stddev=1e-5), name='flow')(x)
 
@@ -114,6 +114,8 @@ def unet(vol_size, enc_nf, dec_nf, full_size=True):
     # the whole unet returns the warped image and the flow used to warp it
     model = Model(inputs=[src, tgt], outputs=[y, flow])
     return model
+
+
 
 """
 return warped image and flow param
@@ -142,6 +144,11 @@ def miccai2018_net(vol_size, enc_nf, dec_nf, use_miccai_int=True, int_steps=7, i
     unet_model = unet_core(vol_size, enc_nf, dec_nf, full_size=False)
     [src,tgt] = unet_model.inputs
     x_out = unet_model.outputs[-1]
+
+    """
+    calculate the deformation field which will be used
+    for warp
+    """
 
     # velocity mean and logsigma layers
     flow_mean = Conv3D(3, kernel_size=3, padding='same',
@@ -176,6 +183,10 @@ def miccai2018_net(vol_size, enc_nf, dec_nf, use_miccai_int=True, int_steps=7, i
     # get up to final resolution
     flow = Lambda(interp_upsampling, output_shape=vol_size+(3,), name='pre_diffflow')(flow)
     flow = Lambda(lambda arg: arg*2, name='diffflow')(flow)
+
+    """
+    spatial transform
+    """
 
     # transform
     y = nrn_layers.SpatialTransformer(interp_method='linear', indexing=indexing)([src, flow])
