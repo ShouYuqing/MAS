@@ -97,12 +97,16 @@ def unet(vol_size, enc_nf, dec_nf, full_size=True):
     x = unet_model.output
 
     # transform the results into a flow field.
+    # unet_core.output-->>flow
     flow = Conv3D(3, kernel_size=3, padding='same',
                   kernel_initializer=RandomNormal(mean=0.0, stddev=1e-5), name='flow')(x)
 
+
     # warp the source with the flow
+    # y is the image warped with flow
     y = nrn_layers.SpatialTransformer(interp_method='linear', indexing='xy')([src, flow])
     # prepare model
+    # the whole unet returns the warped image and the flow used to warp it
     model = Model(inputs=[src, tgt], outputs=[y, flow])
     return model
 
