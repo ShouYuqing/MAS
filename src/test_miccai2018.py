@@ -24,7 +24,7 @@ from medipy.metrics import dice
 import datagenerators
 
 # Test file and anatomical labels we want to evaluate
-test_brain_file = open('...path/here//test_examples.txt')
+test_brain_file = open('.../data/test_examples.txt')
 test_brain_strings = test_brain_file.readlines()
 test_brain_strings = [x.strip() for x in test_brain_strings]
 n_batches = len(test_brain_strings)

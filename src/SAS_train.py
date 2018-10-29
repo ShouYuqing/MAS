@@ -138,7 +138,7 @@ if __name__ == "__main__":
                         dest="model_save_iter", default=100,
                         help="frequency of model saves")
     parser.add_argument("--model_dir", type=str,
-                        dest="model_dir", default='../models/',
+                        dest="model_dir", default='/home/ys895/SAS_Models/',
                         help="models folder")
 
     args = parser.parse_args()
