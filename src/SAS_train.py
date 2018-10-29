@@ -107,8 +107,6 @@ if __name__ == "__main__":
     parser.add_argument("--model", type=str,dest="model",
                         choices=['vm1','vm2'],default='vm2',
                         help="Voxelmorph-1 or 2")
-    parser.add_argument("--save_name", type=str,
-                        dest="save_name", default='iter', help="Name of model when saving")
     parser.add_argument("--gpu", type=int,default=0,
                         dest="gpu_id", help="gpu id number")
     parser.add_argument("--lr", type=float,
