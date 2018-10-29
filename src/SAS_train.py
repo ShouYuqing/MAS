@@ -72,7 +72,7 @@ def train(model, gpu_id, lr, n_iterations, reg_param, model_save_iter):
 
     # In this part, the code inputs the data into the model
     # Before this part, the model was set
-    for step in range(0, n_iterations):
+    for step in range(1, n_iterations+1):
 
        #Parameters for training : X(train_vol) ,atlas_vol(atlas) ,zero_flow
         X = train_example_gen.__next__()[0]

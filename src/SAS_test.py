@@ -27,7 +27,7 @@ from medipy.metrics import dice
 import datagenerators
 
 
-def test(model_name, iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=[32,32,32,32,32,16,16,3]):
+def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=[32,32,32,32,32,16,16,3]):
 	"""
 	test
 
@@ -55,8 +55,9 @@ def test(model_name, iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,
 	# load weights of model
 	with tf.device(gpu):
 		net = networks.unet(vol_size, nf_enc, nf_dec)
-		net.load_weights('../models/' + model_name +
-                         '/' + str(iter_num) + '.h5')
+        net.load_weights('/home/ys895/SAS_Models/ + ' + str(iter_num) + '.h5')
+		#net.load_weights('../models/' + model_name +
+        #                 '/' + str(iter_num) + '.h5')
 
 	xx = np.arange(vol_size[1])
 	yy = np.arange(vol_size[0])
@@ -65,8 +66,9 @@ def test(model_name, iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,
 
 	X_vol, X_seg = datagenerators.load_example_by_name('../data/test_vol.npz', '../data/test_seg.npz')
 
+    # change the direction of the atlas data and volume data
 	with tf.device(gpu):
-		pred = net.predict([X_vol, atlas_vol])
+		pred = net.predict([atlas_vol, X_vol])
 
 	# Warp segments with flow
 	flow = pred[1][0, :, :, :, :]
