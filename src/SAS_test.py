@@ -55,9 +55,8 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
 	# load weights of model
 	with tf.device(gpu):
 		net = networks.unet(vol_size, nf_enc, nf_dec)
-        net.load_weights('/home/ys895/SAS_Models/ + ' + str(iter_num) + '.h5')
-		#net.load_weights('../models/' + model_name +
-        #                 '/' + str(iter_num) + '.h5')
+        net.load_weights('/home/ys895/SAS_Models/'+ str(iter_num)+'.h5')
+        net.load_weights('../models/' + model_name + '/' + str(iter_num) + '.h5')
 
 	xx = np.arange(vol_size[1])
 	yy = np.arange(vol_size[0])
