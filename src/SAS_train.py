@@ -24,92 +24,74 @@ import losses
 
 
 vol_size = (160, 192, 224)
-
-
 base_data_dir = '/home/ys895/resize256/resize256-crop_x32/'
+#find all the path of .npz file in the directory
+#read training data
 train_vol_names = glob.glob(base_data_dir + 'train/vols/*.npz')
+#shuffle the path of .npz file
+#shuffle the training data
 random.shuffle(train_vol_names)
 
-# load atlas from provided files. This atlas is 160x192x224.
+#read atlas data
 atlas = np.load('../data/atlas_norm.npz')
-atlas_vol = atlas['vol'][np.newaxis, ..., np.newaxis]
+atlas_vol = atlas['vol']
+#add two more dimension into the atlas data
+atlas_vol = np.reshape(atlas_vol, (1,) + atlas_vol.shape+(1,))
 
+def train(model, gpu_id, lr, n_iterations, reg_param, model_save_iter):
 
-def train(model, model_dir, gpu_id, lr, n_iterations, reg_param, model_save_iter, batch_size=1):
-    """
-    model training function
-    :param model: either vm1 or vm2 (based on CVPR 2018 paper)
-    :param model_dir: the model directory to save to
-    :param gpu_id: integer specifying the gpu to use
-    :param lr: learning rate
-    :param n_iterations: number of training iterations
-    :param reg_param: the smoothness/reconstruction tradeoff parameter (lambda in CVPR paper)
-    :param model_save_iter: frequency with which to save models
-    :param batch_size: Optional, default of 1. can be larger, depends on GPU memory and volume size
-    """
-
-    # prepare model folder
+    model_dir = '/home/ys895/SAS_Models'
     if not os.path.isdir(model_dir):
         os.mkdir(model_dir)
 
-    # GPU handling
+    gpu = '/gpu:' + str(gpu_id)
     os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu_id)
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
     config.allow_soft_placement = True
     set_session(tf.Session(config=config))
 
-    # UNET filters for voxelmorph-1 and voxelmorph-2,
-    # these are architectures presented in CVPR 2018
-    nf_enc = [16, 32, 32, 32]
-    if model == 'vm1':
-        nf_dec = [32, 32, 32, 32, 8, 8]
+
+    # UNET filters
+    nf_enc = [16,32,32,32]
+    if(model == 'vm1'):
+        nf_dec = [32,32,32,32,8,8,3]
     else:
-        nf_dec = [32, 32, 32, 32, 32, 16, 16]
+        nf_dec = [32,32,32,32,32,16,16,3]
 
-    # prepare the model
-    # in the CVPR layout, the model takes in [image_1, image_2] and outputs [warped_image_1, flow]
-    model = networks.unet(vol_size, nf_enc, nf_dec)
-    model.compile(optimizer=Adam(lr=lr),
-                  loss=[losses.cc3D(), losses.gradientLoss('l2')],
-                  loss_weights=[1.0, reg_param])
+    with tf.device(gpu):
+        model = networks.unet(vol_size, nf_enc, nf_dec)
+        model.compile(optimizer=Adam(lr=lr), loss=[
+                      losses.cc3D(), losses.gradientLoss('l2')], loss_weights=[1.0, reg_param])
+        # model.load_weights('../models/udrnet2/udrnet1_1/120000.h5')
 
-    # if you'd like to initialize the data, you can do it here:
-    # model.load_weights(os.path.join(model_dir, '120000.h5'))
-
-    # prepare data for training
+    # return the data, add one more dimension into the data
     train_example_gen = datagenerators.example_gen(train_vol_names)
-    zero_flow = np.zeros([batch_size, *vol_size, 3])
+    zero_flow = np.zeros((1, vol_size[0], vol_size[1], vol_size[2], 3))
 
-    # train.
+
+    # In this part, the code inputs the data into the model
+    # Before this part, the model was set
     for step in range(0, n_iterations):
 
-        # get data
-        X = next(train_example_gen)[0]
+       #Parameters for training : X(train_vol) ,atlas_vol(atlas) ,zero_flow
+        X = train_example_gen.__next__()[0]
+        train_loss = model.train_on_batch(
+            [atlas_vol, X], [X, zero_flow])
 
-        # train
-        train_loss = model.train_on_batch([atlas_vol, X],[X, zero_flow])
         if not isinstance(train_loss, list):
             train_loss = [train_loss]
 
-        # print the loss.
-        print_loss(step, 1, train_loss)
+        printLoss(step, 1, train_loss)
 
-        # save model
-        if step % model_save_iter == 0:
-            model.save(os.path.join(model_dir, str(step) + '.h5'))
+        if(step % model_save_iter == 0):
+            model.save(model_dir + '/' + str(step) + '.h5')
 
 
-def print_loss(step, training, train_loss):
-    """
-    Prints training progress to std. out
-    :param step: iteration number
-    :param training: a 0/1 indicating training/testing
-    :param train_loss: model loss at current iteration
-    """
+def printLoss(step, training, train_loss):
     s = str(step) + "," + str(training)
 
-    if isinstance(train_loss, list) or isinstance(train_loss, np.ndarray):
+    if(isinstance(train_loss, list) or isinstance(train_loss, np.ndarray)):
         for i in range(len(train_loss)):
             s += "," + str(train_loss[i])
     else:
@@ -120,28 +102,29 @@ def print_loss(step, training, train_loss):
 
 
 if __name__ == "__main__":
+
     parser = ArgumentParser()
-    parser.add_argument("--model", type=str, dest="model",
-                        choices=['vm1', 'vm2'], default='vm2',
+    parser.add_argument("--model", type=str,dest="model",
+                        choices=['vm1','vm2'],default='vm2',
                         help="Voxelmorph-1 or 2")
-    parser.add_argument("--gpu", type=int, default=0,
+    parser.add_argument("--save_name", type=str,
+                        dest="save_name", default='iter', help="Name of model when saving")
+    parser.add_argument("--gpu", type=int,default=0,
                         dest="gpu_id", help="gpu id number")
     parser.add_argument("--lr", type=float,
-                        dest="lr", default=1e-4, help="learning rate")
+                        dest="lr", default=1e-4,help="learning rate")
     parser.add_argument("--iters", type=int,
-                        dest="n_iterations", default=150000,
+                        dest="n_iterations", default=15000,
                         help="number of iterations")
     parser.add_argument("--lambda", type=float,
                         dest="reg_param", default=1.0,
                         help="regularization parameter")
     parser.add_argument("--checkpoint_iter", type=int,
-                        dest="model_save_iter", default=100,
+                        dest="model_save_iter", default=500,
                         help="frequency of model saves")
-    parser.add_argument("--model_dir", type=str,
-                        dest="model_dir", default='/home/ys895/SAS_Models/',
-                        help="models folder")
 
     args = parser.parse_args()
     train(**vars(args))
+
 
 
