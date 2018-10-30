@@ -33,7 +33,7 @@ X_seg_slice = X_seg[0, :, :, :, 0 ]
 #print(X_seg_slice.shape)
 X_seg_slice = X_seg_slice.reshape((X_seg_slice.shape[1],X_seg_slice.shape[0],X_seg_slice.shape[2]))
 for i in range(0,X_seg_slice.shape[0]):
-    list.append(X_seg_slice[i,:,:])
+    list.insert(X_seg_slice[i,:,:])
 #X_seg_slice = X_seg_slice.reshape([X_seg_slice.shape[0],X_seg_slice.shape[1],X_seg_slice.shape[2]])
 #X_seg_slice = [X_seg_slice]
 fig,axs = nu.plot.slices(list)
