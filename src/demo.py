@@ -28,4 +28,5 @@ X_vol, X_seg = datagenerators.load_example_by_name('../data/test_vol.npz', '../d
 
 X_seg_slice = X_seg[0, :, :, :, 0]
 X_seg_slice = X_seg_slice.reshape([X_seg_slice.shape[1],X_seg_slice.shape[0],X_seg_slice.shape[2]])
-nu.plot.slices(X_seg_slice)
+fig,axs = nu.plot.slices(X_seg_slice)
+savefig("1.jpg")
