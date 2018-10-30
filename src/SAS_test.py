@@ -66,7 +66,7 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  flow = pred[1][0, :, :, :, :] # (1, 160, 192, 224, 3)
  sample = flow+grid
  sample = np.stack((sample[:, :, :, 1], sample[:, :, :, 0], sample[:, :, :, 2]), 3)
- warp_seg = interpn((yy, xx, zz), X_seg[0, :, :, :, 0], sample, method='nearest', bounds_error=False, fill_value=0) # (160, 192, 224)
+ warp_seg = interpn((yy, xx, zz), atlas_seg[ :, :, : ], sample, method='nearest', bounds_error=False, fill_value=0) # (160, 192, 224)
  vals, _ = dice(warp_seg, X_seg[0,:,:,:,0], labels=labels, nargout=2)
  print(np.mean(vals), np.std(vals))
 
