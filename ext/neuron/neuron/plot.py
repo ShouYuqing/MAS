@@ -9,7 +9,7 @@ def slices(slices_in,              # the 2D slices
            cmaps=None,          # list of colormaps
            norms=None,          # list of normalizations
            do_colorbars=False,  # option to show colorbars on each slice
-           grid=False,          # option to plot the images in a grid or a single row
+           grid=True,          # option to plot the images in a grid or a single row
            width=15,            # width in in
            show=True,           # option to actually show the plot (plt.show())
            imshow_args=None):
@@ -17,7 +17,6 @@ def slices(slices_in,              # the 2D slices
 
     # input processing
     nb_plots = len(slices_in)
-    print(nb_plots)
     def input_check(inputs, nb_plots, name):
         ''' change input from None/single-link '''
         assert (inputs is None) or (len(inputs) == nb_plots) or (len(inputs) == 1), \
