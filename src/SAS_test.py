@@ -54,21 +54,16 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  xx = np.arange(vol_size[1])
  yy = np.arange(vol_size[0])
  zz = np.arange(vol_size[2])
- grid = np.rollaxis(np.array(np.meshgrid(xx, yy, zz)), 0, 4)
- print('the size of grid:')
- print(grid.shape)
+ grid = np.rollaxis(np.array(np.meshgrid(xx, yy, zz)), 0, 4) # (160, 192, 224, 3)
  X_vol, X_seg = datagenerators.load_example_by_name('../data/test_vol.npz', '../data/test_seg.npz')
 
  # change the direction of the atlas data and volume data
+ # pred[0].shape (1, 160, 192, 224, 1)
+ # pred[1].shape (1, 160, 192, 224, 3)
  with tf.device(gpu):
     pred = net.predict([atlas_vol, X_vol])
- print('the shape of pred:')
- print(pred[0].shape)
- print(pred[1].shape)
 	# Warp segments with flow
- flow = pred[1][0, :, :, :, :]
- print('the size of flow:')
- print(flow.shape)
+ flow = pred[1][0, :, :, :, :] # (1, 160, 192, 224, 3)
  sample = flow+grid
  sample = np.stack((sample[:, :, :, 1], sample[:, :, :, 0], sample[:, :, :, 2]), 3)
  warp_seg = interpn((yy, xx, zz), X_seg[0, :, :, :, 0], sample, method='nearest', bounds_error=False, fill_value=0)
