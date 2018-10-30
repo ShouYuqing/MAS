@@ -1,5 +1,6 @@
 # MAS & SAS
 Multi Atlas Segmentation for 3D MRI brain image (in progress)
+> Based on Voxelmorph 
 
 ## SAS(Single Atlas Segmentation)
 ### Change the direction between volume data and atlas data while training: 
