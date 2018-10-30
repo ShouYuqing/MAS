@@ -25,6 +25,7 @@ import medipy
 import networks
 from medipy.metrics import dice
 import datagenerators
+import neuron as nu
 
 
 def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=[32,32,32,32,32,16,16,3]):
