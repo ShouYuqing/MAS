@@ -2,7 +2,7 @@
 Multi Atlas Segmentation for 3D MRI brain image (in progress)
 
 Based on Voxelmorph https://arxiv.org/abs/1809.05231
-[Voxelmorph](https://arxiv.org/abs/1809.05231" Voxelmorph"){:target="_blank"}  
+[](https://arxiv.org/abs/1809.05231" Voxelmorph"){}  
 ## SAS(Single Atlas Segmentation)
 > Change the direction between volume data and atlas data while training: 
 ```python 
