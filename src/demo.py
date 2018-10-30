@@ -31,6 +31,6 @@ X_seg_slice = X_seg[:, :, :, :, : ]
 print(X_seg_slice.shape)
 X_seg_slice.reshape([X_seg_slice.shape[1],X_seg_slice.shape[2],X_seg_slice.shape[3]])
 #X_seg_slice = X_seg_slice.reshape([X_seg_slice.shape[0],X_seg_slice.shape[1],X_seg_slice.shape[2]])
-fig,axs = nu.plot.slices(X_seg_slice)
 print(X_seg_slice.shape)
+fig,axs = nu.plot.slices(X_seg_slice)
 fig.savefig("1.pdf")
