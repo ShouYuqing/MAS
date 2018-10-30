@@ -8,9 +8,9 @@ def slices(slices_in,              # the 2D slices
            titles=None,         # list of titles
            cmaps=None,          # list of colormaps
            norms=None,          # list of normalizations
-           do_colorbars=False,  # option to show colorbars on each slice
-           grid=False,          # option to plot the images in a grid or a single row
-           width=250,            # width in in
+           do_colorbars=True,  # option to show colorbars on each slice
+           grid=True,          # option to plot the images in a grid or a single row
+           width=224,            # width in in
            show=False,           # option to actually show the plot (plt.show())
            imshow_args=None):
     ''' plot a grid of slices (2d images) '''
