@@ -38,7 +38,7 @@ atlas_vol = atlas['vol']
 #add two more dimension into the atlas data
 atlas_vol = np.reshape(atlas_vol, (1,) + atlas_vol.shape+(1,))
 
-def train(model, gpu_id, lr, n_iterations, reg_param, model_save_iter):
+def train(model, gpu_id, lr, n_iterations, reg_param, model_save_iter, load_iter):
 
     model_dir = '/home/ys895/SAS_Models'
     if not os.path.isdir(model_dir):
@@ -61,6 +61,9 @@ def train(model, gpu_id, lr, n_iterations, reg_param, model_save_iter):
 
     with tf.device(gpu):
         model = networks.unet(vol_size, nf_enc, nf_dec)
+        if(load_iter != 0):
+            net.load_weights('/home/ys895/SAS_Models/' + str(load_iter) + '.h5')
+
         model.compile(optimizer=Adam(lr=lr), loss=[
                       losses.cc3D(), losses.gradientLoss('l2')], loss_weights=[1.0, reg_param])
         # model.load_weights('../models/udrnet2/udrnet1_1/120000.h5')
@@ -85,7 +88,7 @@ def train(model, gpu_id, lr, n_iterations, reg_param, model_save_iter):
         printLoss(step, 1, train_loss)
 
         if(step % model_save_iter == 0):
-            model.save(model_dir + '/' + str(step) + '.h5')
+            model.save(model_dir + '/' + str(load_iter+step) + '.h5')
 
 
 def printLoss(step, training, train_loss):
@@ -120,6 +123,9 @@ if __name__ == "__main__":
     parser.add_argument("--checkpoint_iter", type=int,
                         dest="model_save_iter", default=500,
                         help="frequency of model saves")
+    parser.add_argument("--load_iter", type=int,
+                        dest="load_iter", default=0,
+                        help="the iteratons of models to load")
 
     args = parser.parse_args()
     train(**vars(args))
