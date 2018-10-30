@@ -17,7 +17,7 @@ def slices(slices_in,              # the 2D slices
 
     # input processing
     nb_plots = len(slices_in)
-
+    print(nb_plots)
     def input_check(inputs, nb_plots, name):
         ''' change input from None/single-link '''
         assert (inputs is None) or (len(inputs) == nb_plots) or (len(inputs) == 1), \
