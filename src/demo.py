@@ -26,5 +26,5 @@ import neuron as nu
 
 X_vol, X_seg = datagenerators.load_example_by_name('../data/test_vol.npz', '../data/test_seg.npz') # (160, 192, 224)
 
-X_seg_slice = X_seg[160,100,224]
+X_seg_slice = X_seg[1,160,100,224,1]
 nu.slice(X_seg_slice)
