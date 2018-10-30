@@ -27,7 +27,8 @@ import neuron as nu
 
 X_vol, X_seg = datagenerators.load_example_by_name('../data/test_vol.npz', '../data/test_seg.npz') # (160, 192, 224)
 
-X_seg_slice = X_seg[:, :, :, :, : ]
+X_seg_slice = X_seg[:, :, :, :, : ] 
+print(X_seg_slice.shape)
 X_seg_slice.reshape([X_seg_slice.shape[1],X_seg_slice.shape[2],X_seg_slice.shape[3]])
 #X_seg_slice = X_seg_slice.reshape([X_seg_slice.shape[0],X_seg_slice.shape[1],X_seg_slice.shape[2]])
 fig,axs = nu.plot.slices(X_seg_slice)
