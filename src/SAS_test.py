@@ -63,7 +63,7 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  with tf.device(gpu):
     pred = net.predict([atlas_vol, X_vol])
  print('the shape of pred:')
- print(pred.shape)
+ print(pred.size)
 	# Warp segments with flow
  flow = pred[1][0, :, :, :, :]
  print('the size of flow:')
