@@ -39,9 +39,6 @@ def slices(slices_in,              # the 2D slices
         if isinstance(grid, bool):
             rows = np.floor(np.sqrt(nb_plots)).astype(int)
             cols = np.ceil(nb_plots/rows).astype(int)
-            print(rows)
-            print(cols)
-
         else:
             assert isinstance(grid, (list, tuple)),\
                 "grid should either be bool or [rows,cols]"
