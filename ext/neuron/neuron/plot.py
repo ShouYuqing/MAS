@@ -81,6 +81,7 @@ def slices(slices_in,              # the 2D slices
     # show the plots
     fig.set_size_inches(width, rows/cols*width)
     plt.tight_layout()
+    savefig('1.pdf')
 
     if show:
         plt.show()
