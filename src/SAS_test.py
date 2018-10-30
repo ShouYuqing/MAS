@@ -73,7 +73,7 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
 
 
 # plot the outcome of warp seg
- warp_seg = warp_seg.reshape((warp_seg.shape[2], warp_seg.shape[0], warp_seg.shape[1]))
+ warp_seg = warp_seg.reshape((warp_seg.shape[1], warp_seg.shape[2], warp_seg.shape[3]))
  nu.plot.slices(warp_seg)
 
 
