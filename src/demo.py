@@ -43,7 +43,7 @@ X_seg_slice = X_seg[0, :, :, :, 0 ]
 #print(fig.shape)
 #fig.savefig("1.pdf")
 warp_seg = X_seg_slice
-warp_seg = warp_seg.reshape((warp_seg.shape[1], warp_seg.shape[2], warp_seg.shape[0]))
+warp_seg = X_seg_slice.reshape((warp_seg.shape[1], warp_seg.shape[2], warp_seg.shape[0]))
 warp_seg2 = np.empty(shape=(warp_seg.shape[1], warp_seg.shape[2], warp_seg.shape[0]))
 for i in range(0, warp_seg.shape[1]):
     warp_seg2[i, :, :] = np.transpose(warp_seg[:, i, :])
