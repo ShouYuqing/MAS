@@ -72,12 +72,12 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  print(np.mean(vals), np.std(vals))
 
 
-# plot the outcome of warp seg
- warp_seg = warp_seg.reshape((warp_seg.shape[1], warp_seg.shape[2], warp_seg.shape[0]))
- warp_seg2 = np.empty(shape = (warp_seg.shape[1], warp_seg.shape[2], warp_seg.shape[0]))
- for i in range(0,warp_seg.shape[1]):
-  warp_seg2[i,:,:] = np.transpose(warp_seg[:,i,:])
- nu.plot.slices(warp_seg2)
+ # plot the outcome of warp seg
+ #warp_seg = warp_seg.reshape((warp_seg.shape[1], warp_seg.shape[2], warp_seg.shape[0]))
+ #warp_seg2 = np.empty(shape = (warp_seg.shape[1], warp_seg.shape[2], warp_seg.shape[0]))
+ #for i in range(0,warp_seg.shape[1]):
+ # warp_seg2[i,:,:] = np.transpose(warp_seg[:,i,:])
+ nu.plot.slices(warp_seg)
 
 
 if __name__ == "__main__":
