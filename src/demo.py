@@ -32,13 +32,19 @@ X_seg_slice = X_seg[0, :, :, :, 0 ]
 #X_seg_slice.reshape([X_seg_slice.shape[0],X_seg_slice.shape[2]])
 #print(X_seg_slice.shape)
 #X_seg_slice = X_seg_slice.reshape((X_seg_slice.shape[1],X_seg_slice.shape[0],X_seg_slice.shape[2]))
-X_seg_slice = X_seg_slice.reshape((X_seg_slice.shape[2],X_seg_slice.shape[1],X_seg_slice.shape[0]))
+#X_seg_slice = X_seg_slice.reshape((X_seg_slice.shape[2],X_seg_slice.shape[1],X_seg_slice.shape[0]))
 #for i in range(0,X_seg_slice.shape[0]):
 #    list.insert(X_seg_slice[i,:,:])
 #X_seg_slice = X_seg_slice.reshape([X_seg_slice.shape[0],X_seg_slice.shape[1],X_seg_slice.shape[2]])
 #X_seg_slice = [X_seg_slice]
-fig,axs = nu.plot.slices(X_seg_slice)
+#fig,axs = nu.plot.slices(X_seg_slice)
 #fig.set_size_inches(width, rows/cols*width)
 #plt.tight_layout()
 #print(fig.shape)
 #fig.savefig("1.pdf")
+warp_seg = X_seg_slice
+warp_seg = warp_seg.reshape((warp_seg.shape[1], warp_seg.shape[2], warp_seg.shape[0]))
+warp_seg2 = np.empty(shape=(warp_seg.shape[1], warp_seg.shape[2], warp_seg.shape[0]))
+for i in range(0, warp_seg.shape[1]):
+    warp_seg2[i, :, :] = np.transpose(warp_seg[:, i, :])
+nu.plot.slices(warp_seg2)
