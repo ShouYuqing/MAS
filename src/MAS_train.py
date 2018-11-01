@@ -46,7 +46,7 @@ atlas_list = list()
 for i in atlas_strings:
     atlas_add = np.load(i.strip())
     atlas_add = atlas_add['vol_data']
-    atlas_add = np.reashape(atlas_add,(1,)+atlas_add.shape+(1,))
+    atlas_add = np.reshape(atlas_add,(1,)+atlas_add.shape+(1,))
     atlas_list.append(atlas_add)
 
 
