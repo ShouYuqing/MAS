@@ -32,11 +32,23 @@ train_vol_names = glob.glob(base_data_dir + 'train/vols/*.npz')
 #shuffle the training data
 random.shuffle(train_vol_names)
 
-#read atlas data
-atlas = np.load('../data/atlas_norm.npz')
-atlas_vol = atlas['vol']
+#read the only one atlas data
+#atlas = np.load('../data/atlas_norm.npz')
+#atlas_vol = atlas['vol']
+
 #add two more dimension into the atlas data
-atlas_vol = np.reshape(atlas_vol, (1,) + atlas_vol.shape+(1,))
+#atlas_vol = np.reshape(atlas_vol, (1,) + atlas_vol.shape+(1,))
+
+# atlas_list: several atlas were read
+atlas_file = open('../data/MAS_atlas.txt')
+atlas_strings = test_brain_file.readlines()
+atlas_list = list()
+for i in atlas_strings:
+    atlas_add = np.load(i)
+    atlas_add = atlas_add['vol_data']
+    atlas_add = np.reashape(atlas_add,(1,)+atlas_add.shape+(1,))
+    atlas_list.append(atlas_add)
+
 
 def train(model, gpu_id, lr, n_iterations, reg_param, model_save_iter, load_iter):
 
@@ -76,6 +88,9 @@ def train(model, gpu_id, lr, n_iterations, reg_param, model_save_iter, load_iter
     # In this part, the code inputs the data into the model
     # Before this part, the model was set
     for step in range(1, n_iterations+1):
+       # choose randomly one of the atlas from the atlas_list
+        rand_num = random.randint(0, 4)
+        atlas_vol = atlas_list(rand_num)
 
        #Parameters for training : X(train_vol) ,atlas_vol(atlas) ,zero_flow
         X = train_example_gen.__next__()[0]
