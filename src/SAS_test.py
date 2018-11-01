@@ -41,10 +41,12 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  atlas_seg = atlas['seg']
  atlas_vol = np.reshape(atlas_vol, (1,)+atlas_vol.shape+(1,))
 
- config = tf.ConfigProto()
- config.gpu_options.allow_growth = True
- config.allow_soft_placement = True
- set_session(tf.Session(config=config))
+ #gpu = '/gpu:' + str(gpu_id)
+ os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu_id)
+ #config = tf.ConfigProto()
+ #config.gpu_options.allow_growth = True
+ #config.allow_soft_placement = True
+ #set_session(tf.Session(config=config))
 
  # load weights of model
  with tf.device(gpu):
