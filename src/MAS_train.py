@@ -53,6 +53,8 @@ atlas = atlas['vol']
 atlas = np.reshape(atlas,(1,)+atlas.shape+(1,))
 atlas_list.append(atlas)
 
+list_num = len(atlas_list)
+
 def train(model, gpu_id, lr, n_iterations, reg_param, model_save_iter, load_iter):
 
     model_dir = '/home/ys895/SAS_Models'
@@ -92,7 +94,7 @@ def train(model, gpu_id, lr, n_iterations, reg_param, model_save_iter, load_iter
     # Before this part, the model was set
     for step in range(1, n_iterations+1):
        # choose randomly one of the atlas from the atlas_list
-        rand_num = random.randint(0, 4)
+        rand_num = random.randint(0, list_num-1)
         atlas_vol = atlas_list[rand_num]
 
        #Parameters for training : X(train_vol) ,atlas_vol(atlas) ,zero_flow
