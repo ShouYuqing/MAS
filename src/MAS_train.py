@@ -48,7 +48,9 @@ for i in atlas_strings:
     atlas_add = atlas_add['vol_data']
     atlas_add = np.reshape(atlas_add,(1,)+atlas_add.shape+(1,))
     atlas_list.append(atlas_add)
-
+atlas = np.load('../data/atlas_norm.npz')
+atlas = atlas['vol']
+atlas_list.append(atlas)
 
 def train(model, gpu_id, lr, n_iterations, reg_param, model_save_iter, load_iter):
 
