@@ -41,7 +41,7 @@ random.shuffle(train_vol_names)
 
 # atlas_list: several atlas were read
 atlas_file = open('../data/MAS_atlas.txt')
-atlas_strings = test_brain_file.readlines()
+atlas_strings = atlas_file.readlines()
 atlas_list = list()
 for i in atlas_strings:
     atlas_add = np.load(i)
