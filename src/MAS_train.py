@@ -92,7 +92,7 @@ def train(model, gpu_id, lr, n_iterations, reg_param, model_save_iter, load_iter
     for step in range(1, n_iterations+1):
        # choose randomly one of the atlas from the atlas_list
         rand_num = random.randint(0, 4)
-        atlas_vol = atlas_list(rand_num)
+        atlas_vol = atlas_list[rand_num]
 
        #Parameters for training : X(train_vol) ,atlas_vol(atlas) ,zero_flow
         X = train_example_gen.__next__()[0]
