@@ -34,12 +34,28 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
     # Anatomical labels we want to evaluate
  labels = sio.loadmat('../data/labels.mat')['labels'][0]
 
- atlas = np.load('../data/atlas_norm.npz')
- atlas_vol = atlas['vol']
- print('the size of atlas:')
- print(atlas_vol.shape)
- atlas_seg = atlas['seg']
- atlas_vol = np.reshape(atlas_vol, (1,)+atlas_vol.shape+(1,))
+ # read atlas
+ atlas_vol1, atlas_seg1 = datagenerators.load_example_by_name('/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/vols/990114_vc722.npz',
+                                                              '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/990114_vc722.npz')
+
+ atlas_vol2, atlas_seg2 = datagenerators.load_example_by_name('/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/vols/990210_vc792.npz',
+                                                              '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/990210_vc792.npz')
+
+ atlas_vol3, atlas_seg3 = datagenerators.load_example_by_name('/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/vols/990405_vc922.npz',
+                                                              '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/990405_vc922.npz')
+
+ atlas_vol4, atlas_seg4 = datagenerators.load_example_by_name('/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/vols/991006_vc1337.npz',
+                                                              '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/991006_vc1337.npz')
+
+ atlas_vol5, atlas_seg5 = datagenerators.load_example_by_name('/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/vols/991120_vc1456.npz',
+                                                              '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/991120_vc1456.npz')
+
+ #atlas = np.load('../data/atlas_norm.npz')
+ #atlas_vol = atlas['vol']
+ #print('the size of atlas:')
+ #print(atlas_vol.shape)
+ #atlas_seg = atlas['seg']
+ #atlas_vol = np.reshape(atlas_vol, (1,)+atlas_vol.shape+(1,))
 
  #gpu = '/gpu:' + str(gpu_id)
  os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu_id)
@@ -64,11 +80,11 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  # pred[0].shape (1, 160, 192, 224, 1)
  # pred[1].shape (1, 160, 192, 224, 3)
  with tf.device(gpu):
-    pred1 = net.predict([atlas_vol, X_vol])
-    pred2 = net.predict([atlas_vol, X_vol])
-    pred3 = net.predict([atlas_vol, X_vol])
-    pred4 = net.predict([atlas_vol, X_vol])
-    pred5 = net.predict([atlas_vol, X_vol])
+    pred1 = net.predict([atlas_vol1, X_vol])
+    pred2 = net.predict([atlas_vol2, X_vol])
+    pred3 = net.predict([atlas_vol3, X_vol])
+    pred4 = net.predict([atlas_vol4, X_vol])
+    pred5 = net.predict([atlas_vol5, X_vol])
  # Warp segments with flow
  flow1 = pred1[1][0, :, :, :, :]# (1, 160, 192, 224, 3)
  flow2 = pred2[1][0, :, :, :, :]
@@ -87,11 +103,11 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  sample5 = flow5+grid
  sample5 = np.stack((sample5[:, :, :, 1], sample5[:, :, :, 0], sample5[:, :, :, 2]), 3)
 
- warp_seg1 = interpn((yy, xx, zz), atlas_seg[ :, :, : ], sample1, method='nearest', bounds_error=False, fill_value=0) # (160, 192, 224)
- warp_seg2 = interpn((yy, xx, zz), atlas_seg[:, :, :], sample2, method='nearest', bounds_error=False, fill_value=0)
- warp_seg3 = interpn((yy, xx, zz), atlas_seg[:, :, :], sample3, method='nearest', bounds_error=False, fill_value=0)
- warp_seg4 = interpn((yy, xx, zz), atlas_seg[:, :, :], sample4, method='nearest', bounds_error=False, fill_value=0)
- warp_seg5 = interpn((yy, xx, zz), atlas_seg[:, :, :], sample5, method='nearest', bounds_error=False, fill_value=0)
+ warp_seg1 = interpn((yy, xx, zz), atlas_seg1[ :, :, : ], sample1, method='nearest', bounds_error=False, fill_value=0) # (160, 192, 224)
+ warp_seg2 = interpn((yy, xx, zz), atlas_seg2[:, :, :], sample2, method='nearest', bounds_error=False, fill_value=0)
+ warp_seg3 = interpn((yy, xx, zz), atlas_seg3[:, :, :], sample3, method='nearest', bounds_error=False, fill_value=0)
+ warp_seg4 = interpn((yy, xx, zz), atlas_seg4[:, :, :], sample4, method='nearest', bounds_error=False, fill_value=0)
+ warp_seg5 = interpn((yy, xx, zz), atlas_seg5[:, :, :], sample5, method='nearest', bounds_error=False, fill_value=0)
 
  # label fusion
 
