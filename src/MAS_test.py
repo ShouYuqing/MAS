@@ -37,8 +37,8 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
 
  # read atlas
  atlas_vol1, atlas_seg1 = datagenerators.load_example_by_name('/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/vols/990114_vc722.npz',
-                                                              '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/990114_vc722.npz')
- atlas_seg1 = atlas_seg1[0,:,:,:,0]
+                                                              '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/990114_vc722.npz')# [1,160,192,224,1]
+ atlas_seg1 = atlas_seg1[0,:,:,:,0]# reduce the dimension to [160,192,224]
 
  atlas_vol2, atlas_seg2 = datagenerators.load_example_by_name('/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/vols/990210_vc792.npz',
                                                               '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/990210_vc792.npz')
@@ -120,7 +120,7 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  for x in range(0,160):
      for y in range(0,192):
          for z in range(0,224):
-             warp_arr = np.array([warp_seg1[x,y,z],warp_seg2[x,y,z],warp_seg3[x,y,z],warp_seg4[x,y,z],warp_seg5[x,y,z]])
+             warp_arr = np.array([[warp_seg1[x,y,z]],[warp_seg2[x,y,z]],[warp_seg3[x,y,z]],[warp_seg4[x,y,z]],[warp_seg5[x,y,z]]])
              warp_seg[x,y,z] = stats.mode(warp_arr)
 
 
