@@ -51,7 +51,7 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  # load weights of model
  with tf.device(gpu):
     net = networks.unet(vol_size, nf_enc, nf_dec)
-    net.load_weights('/home/ys895/SAS_Models/'+str(iter_num)+'.h5')
+    net.load_weights('/home/ys895/MAS_Models/'+str(iter_num)+'.h5')
     #net.load_weights('../models/' + model_name + '/' + str(iter_num) + '.h5')
 
  xx = np.arange(vol_size[1])
@@ -64,12 +64,40 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  # pred[0].shape (1, 160, 192, 224, 1)
  # pred[1].shape (1, 160, 192, 224, 3)
  with tf.device(gpu):
-    pred = net.predict([atlas_vol, X_vol])
-	# Warp segments with flow
- flow = pred[1][0, :, :, :, :] # (1, 160, 192, 224, 3)
- sample = flow+grid
- sample = np.stack((sample[:, :, :, 1], sample[:, :, :, 0], sample[:, :, :, 2]), 3)
- warp_seg = interpn((yy, xx, zz), atlas_seg[ :, :, : ], sample, method='nearest', bounds_error=False, fill_value=0) # (160, 192, 224)
+    pred1 = net.predict([atlas_vol, X_vol])
+    pred2 = net.predict([atlas_vol, X_vol])
+    pred3 = net.predict([atlas_vol, X_vol])
+    pred4 = net.predict([atlas_vol, X_vol])
+    pred5 = net.predict([atlas_vol, X_vol])
+ # Warp segments with flow
+ flow1 = pred1[1][0, :, :, :, :]# (1, 160, 192, 224, 3)
+ flow2 = pred2[1][0, :, :, :, :]
+ flow3 = pred3[1][0, :, :, :, :]
+ flow4 = pred4[1][0, :, :, :, :]
+ flow5 = pred5[1][0, :, :, :, :]
+
+ sample1 = flow1+grid
+ sample1 = np.stack((sample1[:, :, :, 1], sample1[:, :, :, 0], sample1[:, :, :, 2]), 3)
+ sample2 = flow2+grid
+ sample2 = np.stack((sample2[:, :, :, 1], sample2[:, :, :, 0], sample2[:, :, :, 2]), 3)
+ sample3 = flow3+grid
+ sample3 = np.stack((sample3[:, :, :, 1], sample3[:, :, :, 0], sample3[:, :, :, 2]), 3)
+ sample4 = flow4+grid
+ sample4 = np.stack((sample4[:, :, :, 1], sample4[:, :, :, 0], sample4[:, :, :, 2]), 3)
+ sample5 = flow5+grid
+ sample5 = np.stack((sample5[:, :, :, 1], sample5[:, :, :, 0], sample5[:, :, :, 2]), 3)
+
+ warp_seg1 = interpn((yy, xx, zz), atlas_seg[ :, :, : ], sample1, method='nearest', bounds_error=False, fill_value=0) # (160, 192, 224)
+ warp_seg2 = interpn((yy, xx, zz), atlas_seg[:, :, :], sample2, method='nearest', bounds_error=False, fill_value=0)
+ warp_seg3 = interpn((yy, xx, zz), atlas_seg[:, :, :], sample3, method='nearest', bounds_error=False, fill_value=0)
+ warp_seg4 = interpn((yy, xx, zz), atlas_seg[:, :, :], sample4, method='nearest', bounds_error=False, fill_value=0)
+ warp_seg5 = interpn((yy, xx, zz), atlas_seg[:, :, :], sample5, method='nearest', bounds_error=False, fill_value=0)
+
+ # label fusion
+
+
+
+
  vals, _ = dice(warp_seg, X_seg[0,:,:,:,0], labels=labels, nargout=2)
  print(np.mean(vals), np.std(vals))
 
