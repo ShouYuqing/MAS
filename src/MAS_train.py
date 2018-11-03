@@ -45,13 +45,14 @@ atlas_file = open('../data/MAS_atlas.txt')
 atlas_strings = atlas_file.readlines()
 lenn = 5
 atlas_list = list()
-for i in range(0,5):
+for i in range(0,lenn):
     st = atlas_strings[i]
-    print(st.strip()) 
     atlas_add = np.load(st.strip())
     atlas_add = atlas_add['vol_data']
     atlas_add = np.reshape(atlas_add,(1,)+atlas_add.shape+(1,))
     atlas_list.append(atlas_add)
+
+# read atlas_norm as atlas used for training
 atlas = np.load('../data/atlas_norm.npz')
 atlas = atlas['vol']
 atlas = np.reshape(atlas,(1,)+atlas.shape+(1,))
