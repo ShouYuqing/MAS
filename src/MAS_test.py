@@ -12,6 +12,7 @@ import glob
 import tensorflow as tf
 import scipy.io as sio
 import numpy as np
+from scipy import stats
 from keras.backend.tensorflow_backend import set_session
 from scipy.interpolate import interpn
 
@@ -109,7 +110,14 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  warp_seg4 = interpn((yy, xx, zz), atlas_seg4[:, :, :], sample4, method='nearest', bounds_error=False, fill_value=0)
  warp_seg5 = interpn((yy, xx, zz), atlas_seg5[:, :, :], sample5, method='nearest', bounds_error=False, fill_value=0)
 
- # label fusion
+ 
+ # label fusion: get the final warp_seg
+ warp_seg = np.empty((160, 192, 224))
+ for x in range(0,160):
+     for y in range(0,192):
+         for z in range(0,224):
+             warp_arr = np.array([warp_seg1[x,y,z],warp_seg2[x,y,z],warp_seg3[x,y,z],warp_seg4[x,y,z],warp_seg5[x,y,z]])
+             warp_seg[x,y,z] = stats.mode(warp_arr)
 
 
 
