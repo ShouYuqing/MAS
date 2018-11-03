@@ -121,8 +121,8 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
      for y in range(0,192):
          for z in range(0,224):
              warp_arr = np.array([warp_seg1[x,y,z],warp_seg2[x,y,z],warp_seg3[x,y,z],warp_seg4[x,y,z],warp_seg5[x,y,z]])
-             print(warp_arr)
-             warp_seg[x,y,z] = stats.mode(warp_arr[0])
+             #print(warp_arr)
+             warp_seg[x,y,z] = stats.mode(warp_arr)[0]
 
 
 
