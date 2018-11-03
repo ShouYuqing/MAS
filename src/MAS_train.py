@@ -40,7 +40,7 @@ random.shuffle(train_vol_names)
 # add two more dimension into the atlas data
 #atlas_vol = np.reshape(atlas_vol, (1,) + atlas_vol.shape+(1,))
 
-# atlas data----atlas_list: several atlas were read
+# atlas_list: several atlas were read
 atlas_file = open('../data/MAS_atlas.txt')
 atlas_strings = atlas_file.readlines()
 atlas_list = list()

@@ -25,9 +25,13 @@ from medipy.metrics import dice
 import datagenerators
 import neuron as nu
 
-X_vol, X_seg = datagenerators.load_example_by_name('../data/test_vol.npz', '../data/test_seg.npz') # (160, 192, 224)
-
-X_seg_slice = X_seg[0, :, :, :, 0 ]
+X_vol, X_seg = datagenerators.load_example_by_name('/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/vols/990114_vc722.npz',
+                                                   '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/990114_vc722.npz') # (160, 192, 224)
+print('volume shape')
+print(X_vol.shape)
+print('seg shape')
+print(X_seg.shape)
+#X_seg_slice = X_seg[0, :, :, :, 0 ]
 #print(X_seg_slice)
 #X_seg_slice.reshape([X_seg_slice.shape[0],X_seg_slice.shape[2]])
 #print(X_seg_slice.shape)
@@ -42,9 +46,9 @@ X_seg_slice = X_seg[0, :, :, :, 0 ]
 #plt.tight_layout()
 #print(fig.shape)
 #fig.savefig("1.pdf")
-warp_seg = X_seg_slice
-warp_seg = X_seg_slice.reshape((warp_seg.shape[1], warp_seg.shape[0], warp_seg.shape[2]))
+#warp_seg = X_seg_slice
+#warp_seg = X_seg_slice.reshape((warp_seg.shape[1], warp_seg.shape[0], warp_seg.shape[2]))
 #warp_seg2 = np.empty(shape=(warp_seg.shape[1], warp_seg.shape[2], warp_seg.shape[0]))
 #for i in range(0, warp_seg.shape[1]):
 #    warp_seg2[i, :, :] = np.transpose(warp_seg[:, i, :])
-nu.plot.slices(warp_seg)
+#nu.plot.slices(warp_seg)
