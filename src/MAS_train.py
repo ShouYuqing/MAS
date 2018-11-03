@@ -58,7 +58,7 @@ list_num = len(atlas_list)
 
 def train(model, gpu_id, lr, n_iterations, reg_param, model_save_iter, load_iter):
 
-    model_dir = '/home/ys895/SAS_Models'
+    model_dir = '/home/ys895/MAS_Models'
     if not os.path.isdir(model_dir):
         os.mkdir(model_dir)
 
@@ -136,7 +136,7 @@ if __name__ == "__main__":
     parser.add_argument("--lr", type=float,
                         dest="lr", default=1e-4,help="learning rate")
     parser.add_argument("--iters", type=int,
-                        dest="n_iterations", default=15000,
+                        dest="n_iterations", default=15000, 
                         help="number of iterations")
     parser.add_argument("--lambda", type=float,
                         dest="reg_param", default=1.0,
