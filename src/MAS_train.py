@@ -24,22 +24,23 @@ import losses
 
 
 vol_size = (160, 192, 224)
+# train data preparation
 base_data_dir = '/home/ys895/resize256/resize256-crop_x32/'
-#find all the path of .npz file in the directory
-#read training data
+# find all the path of .npz file in the directory
+# read training data
 train_vol_names = glob.glob(base_data_dir + 'train/vols/*.npz')
-#shuffle the path of .npz file
-#shuffle the training data
+# shuffle the path of .npz file
+# shuffle the training data
 random.shuffle(train_vol_names)
 
-#read the only one atlas data
+# read the only one atlas data
 #atlas = np.load('../data/atlas_norm.npz')
 #atlas_vol = atlas['vol']
 
-#add two more dimension into the atlas data
+# add two more dimension into the atlas data
 #atlas_vol = np.reshape(atlas_vol, (1,) + atlas_vol.shape+(1,))
 
-# atlas_list: several atlas were read
+# atlas data----atlas_list: several atlas were read
 atlas_file = open('../data/MAS_atlas.txt')
 atlas_strings = atlas_file.readlines()
 atlas_list = list()
