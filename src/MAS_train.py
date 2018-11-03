@@ -45,6 +45,7 @@ atlas_file = open('../data/MAS_atlas.txt')
 atlas_strings = atlas_file.readlines()
 atlas_list = list()
 for i in atlas_strings:
+    print(i.strip())
     atlas_add = np.load(i.strip())
     atlas_add = atlas_add['vol_data']
     atlas_add = np.reshape(atlas_add,(1,)+atlas_add.shape+(1,))
@@ -136,7 +137,7 @@ if __name__ == "__main__":
     parser.add_argument("--lr", type=float,
                         dest="lr", default=1e-4,help="learning rate")
     parser.add_argument("--iters", type=int,
-                        dest="n_iterations", default=15000, 
+                        dest="n_iterations", default=15000,
                         help="number of iterations")
     parser.add_argument("--lambda", type=float,
                         dest="reg_param", default=1.0,
