@@ -45,8 +45,8 @@ atlas_file = open('../data/MAS_atlas.txt')
 atlas_strings = atlas_file.readlines()
 lenn = len(atlas_strings)
 atlas_list = list()
-for i in range(0,lenn):
-    #print(i.strip())
+for i in range(0,lenn-1):
+    print(i.strip())
     st = atlas_strings[i]
     atlas_add = np.load(st.strip())
     atlas_add = atlas_add['vol_data']
