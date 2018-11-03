@@ -46,8 +46,8 @@ atlas_strings = atlas_file.readlines()
 lenn = len(atlas_strings)
 atlas_list = list()
 for i in range(0,lenn-1):
-    print(i.strip())
     st = atlas_strings[i]
+    print(st.strip())
     atlas_add = np.load(st.strip())
     atlas_add = atlas_add['vol_data']
     atlas_add = np.reshape(atlas_add,(1,)+atlas_add.shape+(1,))
