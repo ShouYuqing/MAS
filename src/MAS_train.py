@@ -43,11 +43,12 @@ random.shuffle(train_vol_names)
 # atlas_list: several atlas were read
 atlas_file = open('../data/MAS_atlas.txt')
 atlas_strings = atlas_file.readlines()
-print(atlas_strings.type)
+lenn = len(atlas_strings)
 atlas_list = list()
-for i in atlas_strings:
-    print(i.strip())
-    atlas_add = np.load(i.strip())
+for i in range(0,lenn):
+    #print(i.strip())
+    st = atlas_strings[i]
+    atlas_add = np.load(st.strip())
     atlas_add = atlas_add['vol_data']
     atlas_add = np.reshape(atlas_add,(1,)+atlas_add.shape+(1,))
     atlas_list.append(atlas_add)
