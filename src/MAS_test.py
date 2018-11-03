@@ -38,19 +38,23 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  # read atlas
  atlas_vol1, atlas_seg1 = datagenerators.load_example_by_name('/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/vols/990114_vc722.npz',
                                                               '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/990114_vc722.npz')
+ atlas_seg1 = atlas_seg1[0,:,:,:,0]
 
  atlas_vol2, atlas_seg2 = datagenerators.load_example_by_name('/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/vols/990210_vc792.npz',
                                                               '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/990210_vc792.npz')
+ atlas_seg2 = atlas_seg2[0, :, :, :, 0]
 
  atlas_vol3, atlas_seg3 = datagenerators.load_example_by_name('/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/vols/990405_vc922.npz',
                                                               '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/990405_vc922.npz')
+ atlas_seg3 = atlas_seg3[0, :, :, :, 0]
 
  atlas_vol4, atlas_seg4 = datagenerators.load_example_by_name('/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/vols/991006_vc1337.npz',
                                                               '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/991006_vc1337.npz')
+ atlas_seg4 = atlas_seg4[0, :, :, :, 0]
 
  atlas_vol5, atlas_seg5 = datagenerators.load_example_by_name('/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/vols/991120_vc1456.npz',
                                                               '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/991120_vc1456.npz')
-
+ atlas_seg5 = atlas_seg5[0, :, :, :, 0]
  #atlas = np.load('../data/atlas_norm.npz')
  #atlas_vol = atlas['vol']
  #print('the size of atlas:')
@@ -110,7 +114,7 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  warp_seg4 = interpn((yy, xx, zz), atlas_seg4[:, :, :], sample4, method='nearest', bounds_error=False, fill_value=0)
  warp_seg5 = interpn((yy, xx, zz), atlas_seg5[:, :, :], sample5, method='nearest', bounds_error=False, fill_value=0)
 
- 
+
  # label fusion: get the final warp_seg
  warp_seg = np.empty((160, 192, 224))
  for x in range(0,160):
