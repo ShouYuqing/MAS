@@ -43,6 +43,7 @@ random.shuffle(train_vol_names)
 # atlas_list: several atlas were read
 atlas_file = open('../data/MAS_atlas.txt')
 atlas_strings = atlas_file.readlines()
+print(atlas_strings.type)
 atlas_list = list()
 for i in atlas_strings:
     print(i.strip())
