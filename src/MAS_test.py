@@ -143,6 +143,6 @@ if __name__ == "__main__":
     result_list = np.empty((1000,1))
     for i in range(0,35):
         iterr = (i+1)*200
-        result_list[i,:] = test(iterr,sys.argv[1])[0]
+        result_list[i,0] = test(iterr,sys.argv[1])[0]
     print(result_list)
 	#test(sys.argv[1], sys.argv[2])
