@@ -142,7 +142,7 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
 if __name__ == "__main__":
     result_list = np.empty((1000,1))
     for i in range(0,10):
-        iterr = (i+1)*200
+        iterr = (i+1)*700
         result_list[i,:] = test(iterr,sys.argv[1])[0]
     print(result_list)
 	#test(sys.argv[1], sys.argv[2])
