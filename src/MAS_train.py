@@ -84,7 +84,7 @@ def train(model, gpu_id, lr, n_iterations, reg_param, model_save_iter, load_iter
     with tf.device(gpu):
         model = networks.unet(vol_size, nf_enc, nf_dec)
         if(load_iter != 0):
-            net.load_weights('/home/ys895/MAS_Models/' + str(load_iter) + '.h5')
+            model.load_weights('/home/ys895/MAS_Models/' + str(load_iter) + '.h5')
 
         model.compile(optimizer=Adam(lr=lr), loss=[
                       losses.cc3D(), losses.gradientLoss('l2')], loss_weights=[1.0, reg_param])
