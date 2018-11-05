@@ -32,7 +32,7 @@ import neuron as nu
 def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=[32,32,32,32,32,16,16,3]):
  gpu = '/gpu:' + str(gpu_id)
 
-    # Anatomical labels we want to evaluate
+ # Anatomical labels we want to evaluate
  labels = sio.loadmat('../data/labels.mat')['labels'][0]
 
  # read atlas
