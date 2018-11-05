@@ -80,11 +80,11 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  zz = np.arange(vol_size[2])
  grid = np.rollaxis(np.array(np.meshgrid(xx, yy, zz)), 0, 4) # (160, 192, 224, 3)
  #X_vol, X_seg = datagenerators.load_example_by_name('../data/test_vol.npz', '../data/test_seg.npz')
- X_vol, X_seg = datagenerators.load_example_by_name('/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/vols/981216_vc681.npz',
-                                                      '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/981216_vc681.npz')
+ #X_vol1, X_seg1 = datagenerators.load_example_by_name('/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/vols/981216_vc681.npz',
+ #                                                     '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/981216_vc681.npz')
 
- #X_vol2, X_seg2 = datagenerators.load_example_by_name('/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/vols/990205_vc783.npz',
- #                                                     '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/990205_vc783.npz')
+ X_vol, X_seg = datagenerators.load_example_by_name('/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/vols/990205_vc783.npz',
+                                                      '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/990205_vc783.npz')
 
  #X_vol3, X_seg3 = datagenerators.load_example_by_name('/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/vols/990525_vc1024.npz',
  #                                                     '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/990525_vc1024.npz')
