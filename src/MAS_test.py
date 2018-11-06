@@ -314,7 +314,7 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
              warp_seg[x,y,z] = stats.mode(warp_arr)[0]
  vals, _ = dice(warp_seg, X_seg5[0, :, :, :, 0], labels=labels, nargout=2)
  mean5 = np.mean(vals)
- 
+
 
  # compute mean of dice score
  sum = mean1 + mean2 + mean3 + mean4 + mean5
