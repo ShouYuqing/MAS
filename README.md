@@ -13,7 +13,7 @@ Based on [Voxelmorph](https://arxiv.org/abs/1809.05231/) and [Unsupervised learn
 
 >Models: MAS-2 MAS-3 MAS-4 MAS-5
 
->Use dice score to evaluate model, code been finished by 11/5/2018
+>Use dice score to evaluate model, code been finished by 11/5/2018.
 
 ## Citation
 **Unsupervised Learning for Fast Probabilistic Diffeomorphic Registration**  
