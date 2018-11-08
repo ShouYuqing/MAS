@@ -141,6 +141,7 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
 
  vals, _ = dice(warp_seg, X_seg1[0, :, :, :, 0], labels=labels, nargout=2)
  mean1 = np.mean(vals)
+ var1 = np.std(vals)
 
  # X2
  with tf.device(gpu):
@@ -185,6 +186,7 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
 
  vals, _ = dice(warp_seg, X_seg2[0,:,:,:,0], labels=labels, nargout=2)
  mean2 = np.mean(vals)
+ var2 = np.std(vals)
  #print(np.mean(vals), np.std(vals))
 
  # X3
@@ -229,6 +231,7 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
              warp_seg[x,y,z] = stats.mode(warp_arr)[0]
  vals, _ = dice(warp_seg, X_seg3[0, :, :, :, 0], labels=labels, nargout=2)
  mean3 = np.mean(vals)
+ var3 = np.std(vals)
 
  # X4
  with tf.device(gpu):
@@ -272,6 +275,7 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
              warp_seg[x,y,z] = stats.mode(warp_arr)[0]
  vals, _ = dice(warp_seg, X_seg4[0, :, :, :, 0], labels=labels, nargout=2)
  mean4 = np.mean(vals)
+ var4 = np.std(vals)
  # X5
  with tf.device(gpu):
     pred1 = net.predict([atlas_vol1, X_vol5])
@@ -314,12 +318,15 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
              warp_seg[x,y,z] = stats.mode(warp_arr)[0]
  vals, _ = dice(warp_seg, X_seg5[0, :, :, :, 0], labels=labels, nargout=2)
  mean5 = np.mean(vals)
+ var5 = np.std(vals)
 
 
  # compute mean of dice score
  sum = mean1 + mean2 + mean3 + mean4 + mean5
  mean_dice = sum/5
- print(mean_dice)
+ var = (var1 + var2 + var3 + var4 + var5)/5
+ print(str(mean_dice) + ',' + str(var))
+
 
  # plot the outcome of warp seg
  #warp_seg = warp_seg.reshape((warp_seg.shape[1], warp_seg.shape[2], warp_seg.shape[0]))
