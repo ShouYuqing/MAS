@@ -7,13 +7,13 @@ Based on [Voxelmorph](https://arxiv.org/abs/1809.05231/) and [Unsupervised learn
 ```python 
  train([atlas,volume],[volume,flow])
 ```
-> Use dice score to evaluate model, the code has been finished by 10/29/2018.
+> Use dice score to evaluate model, code been finished by 10/29/2018.
 ## MAS(Multi Atlas Segmentation)
 >Label fusion is implemented in the test part of MAS
 
 >Models: MAS-2 MAS-3 MAS-4 MAS-5
 
->Use dice score to evaluate model
+>Use dice score to evaluate model, code been finished by 11/5/2018
 
 ## Citation
 **Unsupervised Learning for Fast Probabilistic Diffeomorphic Registration**  
