@@ -53,10 +53,10 @@ for i in range(0,lenn):
     atlas_list.append(atlas_add)
 
 # read atlas_norm as atlas used for training
-atlas = np.load('../data/atlas_norm.npz')
-atlas = atlas['vol']
-atlas = np.reshape(atlas,(1,)+atlas.shape+(1,))
-atlas_list.append(atlas)
+#atlas = np.load('../data/atlas_norm.npz')
+#atlas = atlas['vol']
+#atlas = np.reshape(atlas,(1,)+atlas.shape+(1,))
+#atlas_list.append(atlas)
 
 list_num = len(atlas_list)
 
