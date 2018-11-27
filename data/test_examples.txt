@@ -1,7 +1,5 @@
 GSP_081030_NC89WB_FS_mri_talairach_norm.npz
-
 GSP_081101_NK25FK_FS_mri_talairach_norm.npz
-
 GSP_090106_JT53JK_FS_mri_talairach_norm.npz
 
 GSP_090110_MG55BK_FS_mri_talairach_norm.npz
