@@ -52,15 +52,7 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
                                                               '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/991006_vc1337.npz')
  atlas_seg4 = atlas_seg4[0, :, :, :, 0]
 
- #atlas_vol5, atlas_seg5 = datagenerators.load_example_by_name('/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/vols/991120_vc1456.npz',
- #                                                             '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/991120_vc1456.npz')
- #atlas_seg5 = atlas_seg5[0, :, :, :, 0]
- #atlas = np.load('../data/atlas_norm.npz')
- #atlas_vol = atlas['vol']
- #print('the size of atlas:')
- #print(atlas_vol.shape)
- #atlas_seg = atlas['seg']
- #atlas_vol = np.reshape(atlas_vol, (1,)+atlas_vol.shape+(1,))
+
 
  #gpu = '/gpu:' + str(gpu_id)
  os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu_id)
@@ -92,8 +84,8 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  X_vol4, X_seg4 = datagenerators.load_example_by_name('/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/vols/991025_vc1379.npz',
                                                       '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/991025_vc1379.npz')
 
- #X_vol5, X_seg5 = datagenerators.load_example_by_name('/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/vols/991122_vc1463.npz',
- #                                                    '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/991122_vc1463.npz')
+ X_vol5, X_seg5 = datagenerators.load_example_by_name('/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/vols/991122_vc1463.npz',
+                                                     '/home/ys895/resize256/resize256-crop_x32/FromEugenio_prep/labels/991122_vc1463.npz')
 
  # change the direction of the atlas data and volume data
  # pred[0].shape (1, 160, 192, 224, 1)
@@ -273,11 +265,53 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  vals, _ = dice(warp_seg, X_seg4[0, :, :, :, 0], labels=labels, nargout=2)
  mean4 = np.mean(vals)
 
+# X5
+ with tf.device(gpu):
+    pred1 = net.predict([atlas_vol1, X_vol5])
+    pred2 = net.predict([atlas_vol2, X_vol5])
+    pred3 = net.predict([atlas_vol3, X_vol5])
+    pred4 = net.predict([atlas_vol4, X_vol5])
+    #pred5 = net.predict([atlas_vol5, X_vol1])
+ # Warp segments with flow
+ flow1 = pred1[1][0, :, :, :, :]# (1, 160, 192, 224, 3)
+ flow2 = pred2[1][0, :, :, :, :]
+ flow3 = pred3[1][0, :, :, :, :]
+ flow4 = pred4[1][0, :, :, :, :]
+ #flow5 = pred5[1][0, :, :, :, :]
 
+ sample1 = flow1+grid
+ sample1 = np.stack((sample1[:, :, :, 1], sample1[:, :, :, 0], sample1[:, :, :, 2]), 3)
+ sample2 = flow2+grid
+ sample2 = np.stack((sample2[:, :, :, 1], sample2[:, :, :, 0], sample2[:, :, :, 2]), 3)
+ sample3 = flow3+grid
+ sample3 = np.stack((sample3[:, :, :, 1], sample3[:, :, :, 0], sample3[:, :, :, 2]), 3)
+ sample4 = flow4+grid
+ sample4 = np.stack((sample4[:, :, :, 1], sample4[:, :, :, 0], sample4[:, :, :, 2]), 3)
+ #sample5 = flow5+grid
+ #sample5 = np.stack((sample5[:, :, :, 1], sample5[:, :, :, 0], sample5[:, :, :, 2]), 3)
+
+ warp_seg1 = interpn((yy, xx, zz), atlas_seg1[ :, :, : ], sample1, method='nearest', bounds_error=False, fill_value=0) # (160, 192, 224)
+ warp_seg2 = interpn((yy, xx, zz), atlas_seg2[:, :, :], sample2, method='nearest', bounds_error=False, fill_value=0)
+ warp_seg3 = interpn((yy, xx, zz), atlas_seg3[:, :, :], sample3, method='nearest', bounds_error=False, fill_value=0)
+ warp_seg4 = interpn((yy, xx, zz), atlas_seg4[:, :, :], sample4, method='nearest', bounds_error=False, fill_value=0)
+ #warp_seg5 = interpn((yy, xx, zz), atlas_seg5[:, :, :], sample5, method='nearest', bounds_error=False, fill_value=0)
+
+
+ # label fusion: get the final warp_seg
+ warp_seg = np.empty((160, 192, 224))
+ for x in range(0,160):
+     for y in range(0,192):
+         for z in range(0,224):
+             warp_arr = np.array([warp_seg1[x,y,z],warp_seg2[x,y,z],warp_seg3[x,y,z],warp_seg4[x,y,z]])
+             #print(warp_arr)
+             warp_seg[x,y,z] = stats.mode(warp_arr)[0]
+
+ vals, _ = dice(warp_seg, X_seg5[0, :, :, :, 0], labels=labels, nargout=2)
+ mean5 = np.mean(vals)
 
  # compute mean of dice score
- sum = mean1 + mean2 + mean3 + mean4
- mean_dice = sum/4
+ sum = mean1 + mean2 + mean3 + mean4 + mean5
+ mean_dice = sum/5
  print(mean_dice)
 
  # plot the outcome of warp seg
