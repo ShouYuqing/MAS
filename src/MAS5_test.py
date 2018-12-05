@@ -123,6 +123,7 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  sample5 = flow5+grid
  sample5 = np.stack((sample5[:, :, :, 1], sample5[:, :, :, 0], sample5[:, :, :, 2]), 3)
 
+
  warp_seg1 = interpn((yy, xx, zz), atlas_seg1[ :, :, : ], sample1, method='nearest', bounds_error=False, fill_value=0) # (160, 192, 224)
  warp_seg2 = interpn((yy, xx, zz), atlas_seg2[:, :, :], sample2, method='nearest', bounds_error=False, fill_value=0)
  warp_seg3 = interpn((yy, xx, zz), atlas_seg3[:, :, :], sample3, method='nearest', bounds_error=False, fill_value=0)
