@@ -1,4 +1,6 @@
 # MAS & SAS
+This is only demo.
+
 Multi Atlas Segmentation for 3D MRI brain image 
 
 Based on [Voxelmorph](https://arxiv.org/abs/1809.05231/) and [Unsupervised learning for registration](https://arxiv.org/abs/1805.04605v1/)
