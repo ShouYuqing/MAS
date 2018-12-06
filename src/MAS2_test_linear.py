@@ -10,6 +10,7 @@ import glob
 
 # third party
 import tensorflow as tf
+import keras
 import scipy.io as sio
 import numpy as np
 from scipy import stats
