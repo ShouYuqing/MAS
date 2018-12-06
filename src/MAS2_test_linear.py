@@ -118,7 +118,7 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  warp_seg = np.empty((160, 192, 224, atlas_seg1.shape[3]))
  print('warp segmentation shape:' + str(warp_seg.shape))
  warp_seg = (warp_seg1 + warp_seg2)/2
- warp_seg = np.argmax(warp_seg)
+ warp_seg = np.argmax(warp_seg, axis = 3)
  print('warp segmentation shape:' + str(warp_seg.shape))
 
  vals, _ = dice(warp_seg, X_seg1[0, :, :, :, 0], labels=labels, nargout=2)
@@ -159,7 +159,7 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  # label fusion: get the final warp_seg
  warp_seg = np.empty((160, 192, 224, atlas_seg1.shape[3]))
  warp_seg = (warp_seg1 + warp_seg2) / 2
- warp_seg = np.argmax(warp_seg)
+ warp_seg = np.argmax(warp_seg, axis = 3)
 
  vals, _ = dice(warp_seg, X_seg2[0,:,:,:,0], labels=labels, nargout=2)
  mean2 = np.mean(vals)
@@ -200,7 +200,7 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  # label fusion: get the final warp_seg
  warp_seg = np.empty((160, 192, 224, atlas_seg1.shape[3]))
  warp_seg = (warp_seg1 + warp_seg2) / 2
- warp_seg = np.argmax(warp_seg)
+ warp_seg = np.argmax(warp_seg, axis = 3)
 
  vals, _ = dice(warp_seg, X_seg3[0, :, :, :, 0], labels=labels, nargout=2)
  mean3 = np.mean(vals)
@@ -240,7 +240,7 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  # label fusion: get the final warp_seg
  warp_seg = np.empty((160, 192, 224, atlas_seg1.shape[3]))
  warp_seg = (warp_seg1 + warp_seg2) / 2
- warp_seg = np.argmax(warp_seg)
+ warp_seg = np.argmax(warp_seg, axis = 3)
 
 
  vals, _ = dice(warp_seg, X_seg4[0, :, :, :, 0], labels=labels, nargout=2)
@@ -282,7 +282,7 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  # label fusion: get the final warp_seg
  warp_seg = np.empty((160, 192, 224, atlas_seg1.shape[3]))
  warp_seg = (warp_seg1 + warp_seg2) / 2
- warp_seg = np.argmax(warp_seg)
+ warp_seg = np.argmax(warp_seg, axis = 3)
 
  vals, _ = dice(warp_seg, X_seg5[0, :, :, :, 0], labels=labels, nargout=2)
  mean5 = np.mean(vals)
