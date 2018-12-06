@@ -112,13 +112,14 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  #warp_seg3 = interpn((yy, xx, zz), atlas_seg3[:, :, :], sample3, method='nearest', bounds_error=False, fill_value=0)
  #warp_seg4 = interpn((yy, xx, zz), atlas_seg4[:, :, :], sample4, method='nearest', bounds_error=False, fill_value=0)
  #warp_seg5 = interpn((yy, xx, zz), atlas_seg5[:, :, :], sample5, method='nearest', bounds_error=False, fill_value=0)
-
+ print('warp segmentation shape:' + str(warp_seg1.shape))
 
  # label fusion: get the final warp_seg
  warp_seg = np.empty((160, 192, 224, atlas_seg1.shape[3]))
+ print('warp segmentation shape:' + str(warp_seg.shape))
  warp_seg = (warp_seg1 + warp_seg2)/2
  warp_seg = np.argmax(warp_seg)
- print('warp segmentation shape:'+ str(warp_seg.shape))
+ print('warp segmentation shape:' + str(warp_seg.shape))
 
  vals, _ = dice(warp_seg, X_seg1[0, :, :, :, 0], labels=labels, nargout=2)
  mean1 = np.mean(vals)
