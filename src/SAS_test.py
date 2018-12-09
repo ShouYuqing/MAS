@@ -168,33 +168,15 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  # X1
  with tf.device(gpu):
     pred1 = net.predict([atlas_vol1, X_vol1])
-    #pred2 = net.predict([atlas_vol2, X_vol1])
-    #pred3 = net.predict([atlas_vol3, X_vol1])
-    #pred4 = net.predict([atlas_vol4, X_vol1])
-    #pred5 = net.predict([atlas_vol5, X_vol1])
+
  # Warp segments with flow
  flow1 = pred1[1][0, :, :, :, :]# (1, 160, 192, 224, 3)
- #flow2 = pred2[1][0, :, :, :, :]
- #flow3 = pred3[1][0, :, :, :, :]
- #flow4 = pred4[1][0, :, :, :, :]
- #flow5 = pred5[1][0, :, :, :, :]
 
  sample1 = flow1+grid
  sample1 = np.stack((sample1[:, :, :, 1], sample1[:, :, :, 0], sample1[:, :, :, 2]), 3)
- #sample2 = flow2+grid
- #sample2 = np.stack((sample2[:, :, :, 1], sample2[:, :, :, 0], sample2[:, :, :, 2]), 3)
- #sample3 = flow3+grid
- #sample3 = np.stack((sample3[:, :, :, 1], sample3[:, :, :, 0], sample3[:, :, :, 2]), 3)
- #sample4 = flow4+grid
- #sample4 = np.stack((sample4[:, :, :, 1], sample4[:, :, :, 0], sample4[:, :, :, 2]), 3)
- #sample5 = flow5+grid
- #sample5 = np.stack((sample5[:, :, :, 1], sample5[:, :, :, 0], sample5[:, :, :, 2]), 3)
 
  warp_seg1 = interpn((yy, xx, zz), atlas_seg1[ :, :, : ], sample1, method='nearest', bounds_error=False, fill_value=0) # (160, 192, 224)
- #warp_seg2 = interpn((yy, xx, zz), atlas_seg2[:, :, :], sample2, method='nearest', bounds_error=False, fill_value=0)
- #warp_seg3 = interpn((yy, xx, zz), atlas_seg3[:, :, :], sample3, method='nearest', bounds_error=False, fill_value=0)
- #warp_seg4 = interpn((yy, xx, zz), atlas_seg4[:, :, :], sample4, method='nearest', bounds_error=False, fill_value=0)
- #warp_seg5 = interpn((yy, xx, zz), atlas_seg5[:, :, :], sample5, method='nearest', bounds_error=False, fill_value=0)
+
 
 
  # label fusion: get the final warp_seg
@@ -210,33 +192,15 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
  # X2
  with tf.device(gpu):
     pred1 = net.predict([atlas_vol1, X_vol2])
-    #pred2 = net.predict([atlas_vol2, X_vol2])
-    #pred3 = net.predict([atlas_vol3, X_vol2])
-    #pred4 = net.predict([atlas_vol4, X_vol2])
-    #pred5 = net.predict([atlas_vol5, X_vol2])
+
  # Warp segments with flow
  flow1 = pred1[1][0, :, :, :, :]# (1, 160, 192, 224, 3)
- #flow2 = pred2[1][0, :, :, :, :]
- #flow3 = pred3[1][0, :, :, :, :]
- #flow4 = pred4[1][0, :, :, :, :]
- #flow5 = pred5[1][0, :, :, :, :]
 
  sample1 = flow1+grid
  sample1 = np.stack((sample1[:, :, :, 1], sample1[:, :, :, 0], sample1[:, :, :, 2]), 3)
- #sample2 = flow2+grid
- #sample2 = np.stack((sample2[:, :, :, 1], sample2[:, :, :, 0], sample2[:, :, :, 2]), 3)
- #sample3 = flow3+grid
- #sample3 = np.stack((sample3[:, :, :, 1], sample3[:, :, :, 0], sample3[:, :, :, 2]), 3)
- #sample4 = flow4+grid
- #sample4 = np.stack((sample4[:, :, :, 1], sample4[:, :, :, 0], sample4[:, :, :, 2]), 3)
- #sample5 = flow5+grid
- #sample5 = np.stack((sample5[:, :, :, 1], sample5[:, :, :, 0], sample5[:, :, :, 2]), 3)
 
  warp_seg1 = interpn((yy, xx, zz), atlas_seg1[ :, :, : ], sample1, method='nearest', bounds_error=False, fill_value=0) # (160, 192, 224)
- #warp_seg2 = interpn((yy, xx, zz), atlas_seg2[:, :, :], sample2, method='nearest', bounds_error=False, fill_value=0)
- #warp_seg3 = interpn((yy, xx, zz), atlas_seg3[:, :, :], sample3, method='nearest', bounds_error=False, fill_value=0)
- #warp_seg4 = interpn((yy, xx, zz), atlas_seg4[:, :, :], sample4, method='nearest', bounds_error=False, fill_value=0)
- #warp_seg5 = interpn((yy, xx, zz), atlas_seg5[:, :, :], sample5, method='nearest', bounds_error=False, fill_value=0)
+
 
 
  # label fusion: get the final warp_seg
@@ -253,33 +217,15 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
 # X3
  with tf.device(gpu):
     pred1 = net.predict([atlas_vol1, X_vol3])
-    #pred2 = net.predict([atlas_vol2, X_vol3])
-    #pred3 = net.predict([atlas_vol3, X_vol1])
-    #pred4 = net.predict([atlas_vol4, X_vol1])
-    #pred5 = net.predict([atlas_vol5, X_vol1])
+
  # Warp segments with flow
  flow1 = pred1[1][0, :, :, :, :]# (1, 160, 192, 224, 3)
- #flow2 = pred2[1][0, :, :, :, :]
- #flow3 = pred3[1][0, :, :, :, :]
- #flow4 = pred4[1][0, :, :, :, :]
- #flow5 = pred5[1][0, :, :, :, :]
 
  sample1 = flow1+grid
  sample1 = np.stack((sample1[:, :, :, 1], sample1[:, :, :, 0], sample1[:, :, :, 2]), 3)
- #sample2 = flow2+grid
- #sample2 = np.stack((sample2[:, :, :, 1], sample2[:, :, :, 0], sample2[:, :, :, 2]), 3)
- #sample3 = flow3+grid
- #sample3 = np.stack((sample3[:, :, :, 1], sample3[:, :, :, 0], sample3[:, :, :, 2]), 3)
- #sample4 = flow4+grid
- #sample4 = np.stack((sample4[:, :, :, 1], sample4[:, :, :, 0], sample4[:, :, :, 2]), 3)
- #sample5 = flow5+grid
- #sample5 = np.stack((sample5[:, :, :, 1], sample5[:, :, :, 0], sample5[:, :, :, 2]), 3)
 
  warp_seg1 = interpn((yy, xx, zz), atlas_seg1[ :, :, : ], sample1, method='nearest', bounds_error=False, fill_value=0) # (160, 192, 224)
- #warp_seg2 = interpn((yy, xx, zz), atlas_seg2[:, :, :], sample2, method='nearest', bounds_error=False, fill_value=0)
- #warp_seg3 = interpn((yy, xx, zz), atlas_seg3[:, :, :], sample3, method='nearest', bounds_error=False, fill_value=0)
- #warp_seg4 = interpn((yy, xx, zz), atlas_seg4[:, :, :], sample4, method='nearest', bounds_error=False, fill_value=0)
- #warp_seg5 = interpn((yy, xx, zz), atlas_seg5[:, :, :], sample5, method='nearest', bounds_error=False, fill_value=0)
+
 
 
  # label fusion: get the final warp_seg
@@ -295,33 +241,14 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
 # X4
  with tf.device(gpu):
     pred1 = net.predict([atlas_vol1, X_vol4])
-    #pred2 = net.predict([atlas_vol2, X_vol4])
-    #pred3 = net.predict([atlas_vol3, X_vol1])
-    #pred4 = net.predict([atlas_vol4, X_vol1])
-    #pred5 = net.predict([atlas_vol5, X_vol1])
+
  # Warp segments with flow
  flow1 = pred1[1][0, :, :, :, :]# (1, 160, 192, 224, 3)
- #flow2 = pred2[1][0, :, :, :, :]
- #flow3 = pred3[1][0, :, :, :, :]
- #flow4 = pred4[1][0, :, :, :, :]
- #flow5 = pred5[1][0, :, :, :, :]
 
  sample1 = flow1+grid
  sample1 = np.stack((sample1[:, :, :, 1], sample1[:, :, :, 0], sample1[:, :, :, 2]), 3)
- #sample2 = flow2+grid
- #sample2 = np.stack((sample2[:, :, :, 1], sample2[:, :, :, 0], sample2[:, :, :, 2]), 3)
- #sample3 = flow3+grid
- #sample3 = np.stack((sample3[:, :, :, 1], sample3[:, :, :, 0], sample3[:, :, :, 2]), 3)
- #sample4 = flow4+grid
- #sample4 = np.stack((sample4[:, :, :, 1], sample4[:, :, :, 0], sample4[:, :, :, 2]), 3)
- #sample5 = flow5+grid
- #sample5 = np.stack((sample5[:, :, :, 1], sample5[:, :, :, 0], sample5[:, :, :, 2]), 3)
 
  warp_seg1 = interpn((yy, xx, zz), atlas_seg1[ :, :, : ], sample1, method='nearest', bounds_error=False, fill_value=0) # (160, 192, 224)
- #warp_seg2 = interpn((yy, xx, zz), atlas_seg2[:, :, :], sample2, method='nearest', bounds_error=False, fill_value=0)
- #warp_seg3 = interpn((yy, xx, zz), atlas_seg3[:, :, :], sample3, method='nearest', bounds_error=False, fill_value=0)
- #warp_seg4 = interpn((yy, xx, zz), atlas_seg4[:, :, :], sample4, method='nearest', bounds_error=False, fill_value=0)
- #warp_seg5 = interpn((yy, xx, zz), atlas_seg5[:, :, :], sample5, method='nearest', bounds_error=False, fill_value=0)
 
 
  # label fusion: get the final warp_seg
@@ -338,33 +265,14 @@ def test(iter_num, gpu_id, vol_size=(160,192,224), nf_enc=[16,32,32,32], nf_dec=
 # X5
  with tf.device(gpu):
     pred1 = net.predict([atlas_vol1, X_vol5])
-    #pred2 = net.predict([atlas_vol2, X_vol5])
-    #pred3 = net.predict([atlas_vol3, X_vol1])
-    #pred4 = net.predict([atlas_vol4, X_vol1])
-    #pred5 = net.predict([atlas_vol5, X_vol1])
+
  # Warp segments with flow
  flow1 = pred1[1][0, :, :, :, :]# (1, 160, 192, 224, 3)
- #flow2 = pred2[1][0, :, :, :, :]
- #flow3 = pred3[1][0, :, :, :, :]
- #flow4 = pred4[1][0, :, :, :, :]
- #flow5 = pred5[1][0, :, :, :, :]
 
  sample1 = flow1+grid
  sample1 = np.stack((sample1[:, :, :, 1], sample1[:, :, :, 0], sample1[:, :, :, 2]), 3)
- #sample2 = flow2+grid
- #sample2 = np.stack((sample2[:, :, :, 1], sample2[:, :, :, 0], sample2[:, :, :, 2]), 3)
- #sample3 = flow3+grid
- #sample3 = np.stack((sample3[:, :, :, 1], sample3[:, :, :, 0], sample3[:, :, :, 2]), 3)
- #sample4 = flow4+grid
- #sample4 = np.stack((sample4[:, :, :, 1], sample4[:, :, :, 0], sample4[:, :, :, 2]), 3)
- #sample5 = flow5+grid
- #sample5 = np.stack((sample5[:, :, :, 1], sample5[:, :, :, 0], sample5[:, :, :, 2]), 3)
 
  warp_seg1 = interpn((yy, xx, zz), atlas_seg1[ :, :, : ], sample1, method='nearest', bounds_error=False, fill_value=0) # (160, 192, 224)
- #warp_seg2 = interpn((yy, xx, zz), atlas_seg2[:, :, :], sample2, method='nearest', bounds_error=False, fill_value=0)
- #warp_seg3 = interpn((yy, xx, zz), atlas_seg3[:, :, :], sample3, method='nearest', bounds_error=False, fill_value=0)
- #warp_seg4 = interpn((yy, xx, zz), atlas_seg4[:, :, :], sample4, method='nearest', bounds_error=False, fill_value=0)
- #warp_seg5 = interpn((yy, xx, zz), atlas_seg5[:, :, :], sample5, method='nearest', bounds_error=False, fill_value=0)
 
 
  # label fusion: get the final warp_seg
