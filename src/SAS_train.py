@@ -179,7 +179,7 @@ random.shuffle(train_vol_names)
 # atlas_list: several atlas were read
 atlas_file = open('../data/MAS_atlas.txt')
 atlas_strings = atlas_file.readlines()
-lenn = 2
+lenn = 1
 atlas_list = list()
 for i in range(0,lenn):
     st = atlas_strings[i]
@@ -198,7 +198,7 @@ list_num = len(atlas_list)
 
 def train(model, gpu_id, lr, n_iterations, reg_param, model_save_iter, load_iter):
 
-    model_dir = '/home/ys895/MAS2_Models'
+    model_dir = '/home/ys895/SAS_Models'
     if not os.path.isdir(model_dir):
         os.mkdir(model_dir)
 
@@ -220,7 +220,7 @@ def train(model, gpu_id, lr, n_iterations, reg_param, model_save_iter, load_iter
     with tf.device(gpu):
         model = networks.unet(vol_size, nf_enc, nf_dec)
         if(load_iter != 0):
-            model.load_weights('/home/ys895/MAS2_Models/' + str(load_iter) + '.h5')
+            model.load_weights('/home/ys895/SAS_Models/' + str(load_iter) + '.h5')
 
         model.compile(optimizer=Adam(lr=lr), loss=[
                       losses.cc3D(), losses.gradientLoss('l2')], loss_weights=[1.0, reg_param])
