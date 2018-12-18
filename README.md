@@ -13,7 +13,7 @@ Based on [Voxelmorph](https://arxiv.org/abs/1809.05231/) and [Unsupervised learn
 ## MAS(Multi Atlas Segmentation)
 >Label fusion 
 
->Models: MAS-2 MAS-3 MAS-4 MAS-5
+>Models: MAS-2 MAS-3 MAS-4 MAS-5 (vm-1, vm-2 double)
 
 >Spatial transform: linear/nearest
 
