@@ -12,7 +12,8 @@ Based on [Voxelmorph](https://arxiv.org/abs/1809.05231/) and [Unsupervised learn
 > Use dice score to evaluate model, code finished by 10/29/2018.
 ## MAS(Multi Atlas Segmentation)
 
-```mermaid
+
+mermaid
 graph LR
     B2[Atlas1/atlas2/atlas3/atlas4/atlas5 volume] --> C
     B[Input image volume] --> C{CNN}
@@ -22,7 +23,7 @@ graph LR
     W --> T[Loss]
     B --> T
     D --> S
-```
+
 
 >Label fusion 
 
