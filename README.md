@@ -1,5 +1,5 @@
 # MAS & SAS
-This is just demo.
+
 
 Multi Atlas Segmentation for 3D MRI Brain Image Based on Unsupervised Learning 
 
