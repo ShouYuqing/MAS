@@ -1,7 +1,7 @@
 # MAS & SAS
+Under the supervision of [Dr.Sabuncu](https://scholar.google.com/citations?user=Pig-I4QAAAAJ&hl=en&oi=ao) and [A.Dalca](https://scholar.google.com/citations?user=zRy-zdAAAAAJ&hl=en&oi=ao)
 
-
-Multi Atlas Segmentation for 3D Brain MRI Based on Unsupervised Learning 
+Multi Atlas Segmentation of 3D Brain MRI Based on Unsupervised Learning 
 
 Based on [Voxelmorph](https://arxiv.org/abs/1809.05231/) and [Unsupervised learning for registration](https://arxiv.org/abs/1805.04605v1/)
 ## SAS(Single Atlas Segmentation)
@@ -22,7 +22,7 @@ Based on [Voxelmorph](https://arxiv.org/abs/1809.05231/) and [Unsupervised learn
 
 >Spatial transform: linear/nearest
 
->Use dice score to evaluate model, code finished by 11/5/2018.
+>Use dice score to evaluate model.
 
 ## Citation
 **Unsupervised Learning for Fast Probabilistic Diffeomorphic Registration**  
