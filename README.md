@@ -3,7 +3,6 @@ Under the supervision of [Dr.Sabuncu](https://scholar.google.com/citations?user=
 
 Multi Atlas Segmentation of 3D Brain MRI Based on Unsupervised Learning 
 
-Based on [Voxelmorph](https://arxiv.org/abs/1809.05231/) and [Unsupervised learning for registration](https://arxiv.org/abs/1805.04605v1/)
 ## SAS(Single Atlas Segmentation)
 ![image](https://github.com/ShouYuqing/Images/blob/master/p1-1.png)
 > Change the direction between volume data and atlas data while training: 
@@ -25,6 +24,7 @@ Based on [Voxelmorph](https://arxiv.org/abs/1809.05231/) and [Unsupervised learn
 >Use dice score to evaluate model.
 
 ## Citation
+Based on [Voxelmorph](https://arxiv.org/abs/1809.05231/) and [Unsupervised learning for registration](https://arxiv.org/abs/1805.04605v1/)
 **Unsupervised Learning for Fast Probabilistic Diffeomorphic Registration**  
 [Adrian V. Dalca](http://adalca.mit.edu), [Guha Balakrishnan](http://people.csail.mit.edu/balakg/), [John Guttag](https://people.csail.mit.edu/guttag/), [Mert R. Sabuncu](http://sabuncu.engineering.cornell.edu/)  
 MICCAI 2018. [eprint arXiv:1805.04605](https://arxiv.org/abs/1805.04605)
