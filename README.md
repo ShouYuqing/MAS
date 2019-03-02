@@ -11,11 +11,11 @@ Based on [Voxelmorph](https://arxiv.org/abs/1809.05231/) and [Unsupervised learn
  train([atlas,volume],[volume,flow])
 ```
 > Use different metrics.
+> Use dice score to evaluate model.
 ### How does segmentation work
 ![image](https://github.com/ShouYuqing/Images/blob/master/p1-2.png)
-> Use dice score to evaluate model.
 ## MAS(Multi Atlas Segmentation)
-
+![image](https://github.com/ShouYuqing/Images/blob/master/p1-5.png)
 >Label fusion 
 
 >Models: MAS-2 MAS-3 MAS-4 MAS-5 (vm-1, vm-2 double)
