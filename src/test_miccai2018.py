@@ -97,6 +97,9 @@ def test(gpu_id, model_dir, iter_num,
         if save_file is not None:
             sio.savemat(save_file, {'dice_vals': dice_vals, 'labels': good_labels})
 
+
+
+
 if __name__ == "__main__":
     """
     assuming the model is model_dir/iter_num.h5
