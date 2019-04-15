@@ -79,10 +79,6 @@ def unet_core(vol_size, enc_nf, dec_nf, full_size=True):
     return Model(inputs=[src, tgt], outputs=[x])
 
 
-"""
-the unet has two input: src and tgt, they are volume and atlas 
-it returns the warped image and the flow used to warp it
-"""
 
 def unet(vol_size, enc_nf, dec_nf, full_size=True):
     """
