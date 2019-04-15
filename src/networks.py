@@ -145,11 +145,6 @@ def miccai2018_net(vol_size, enc_nf, dec_nf, use_miccai_int=True, int_steps=7, i
     [src,tgt] = unet_model.inputs
     x_out = unet_model.outputs[-1]
 
-    """
-    calculate the deformation field which will be used
-    for warp
-    """
-
     # velocity mean and logsigma layers
     flow_mean = Conv3D(3, kernel_size=3, padding='same',
                        kernel_initializer=RandomNormal(mean=0.0, stddev=1e-5), name='flow')(x_out)
